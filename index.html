@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Annapurna+SIL:wght@400;700&family=Assistant:wght@200..800&family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Shadows+Into+Light&family=Signika:wght@300..700&display=swap"
+        rel="stylesheet">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: rgb(238, 231, 231);
+            overflow: hidden;
+        }
+
+        * {
+            font-family: "Libre Franklin", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #root {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 10px;
+            justify-content: space-between;
+            /* text-align: center; */
+        }
+
+        h2 {
+            padding: 10px 0;
+            color: rgb(95, 99, 102);
+        }
+
+        .card {
+            background-color: white;
+            width: 23%;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card img:hover {
+            transform: scale(1.05);
+            overflow: hidden;
+        }
+
+        .card img {
+            transition: transform 0.3s ease;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 10px;
+            align-items: center;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card .description {
+            height: 56px;
+            overflow: hidden;
+            transition: height 0.3s ease;
+            width: 80%;
+            overflow: hidden;
+            margin: auto;
+            font-size: 14.5px;
+        }
+
+        .cartIcon,
+        .mainCartIcon {
+            width: 25px;
+            height: 25px;
+            border: 1px solid rgb(206, 203, 203);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            border-radius: 50%;
+            padding: 5px;
+            right: 10px;
+            top: 10px;
+            cursor: pointer;
+        }
+
+        .cartIcon:hover,
+        .mainCartIcon:hover {
+            background-color: rgb(59, 58, 58);
+            color: white;
+            transition: 0.3s ease;
+            font-weight: 500;
+        }
+
+        #orderList {
+            height: 100vh;
+            width: 25%;
+            border-radius: 5px 0 0 0;
+            position: absolute;
+            z-index: 10;
+            top: 0;
+            right: 0;
+            /* background-color: transparent; */
+
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .rightToLeft {
+            right: -780px !important;
+        }
+
+        .mainCartIcon {
+            background-color: rgb(168, 51, 51);
+            top: 8px;
+            color: white;
+            right: 18px;
+            z-index: 11;
+        }
+
+        #orderCount {
+            color: rgb(0, 0, 0);
+            z-index: 11;
+            position: absolute;
+            font-size: 1.5rem;
+            font-weight: 900;
+            top: -7px;
+            left: -7px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>BurgerAadmi</h1>
+
+    <p class="mainCartIcon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+            stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round"
+                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+        </svg>
+
+        <span id="orderCount">0</span>
+    </p>
+    <div id="orderList" class="rightToLeft"></div>
+    <div id="root"></div>
+
+
+
+    <script src="./data.js"></script>
+    <script>
+        const root = document.getElementById('root');
+        const mainCartIcon = document.querySelector('.mainCartIcon');
+        const orderList = document.getElementById('orderList');
+        const orderCount = document.getElementById('orderCount');
+
+        data.forEach((item, index) => {
+            let div = document.createElement('div');
+            div.innerHTML = `
+                <img src="${item.images[0].sm}"/>
+                <h2>${item.name}</h2>
+                <p class="description">${item.desc}</p>
+                <p class="cartIcon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                </svg>
+                </p>
+            `;
+
+            div.classList.add("card");
+            root.append(div);
+        });
+
+
+        let orderArr = [];
+
+        let count = 0;
+        const activeEvent = () => {
+            document.querySelectorAll(".cartIcon").forEach((ele, index) => {
+                // console.log(ele);
+                ele.addEventListener("click", (e) => {
+                    let rand = Math.floor(Math.random() * 1000);
+                    let obj = {
+                        index: index,
+                        name: data[index].name,
+                        time: rand
+                    }
+
+                    orderArr.push(obj);
+                    orderCount.innerHTML = orderArr.length;
+                    console.log(orderArr);
+                })
+            })
+        }
+
+        let flag = false;
+        mainCartIcon.addEventListener('click', () => {
+            flag = !flag;
+            console.log(flag);
+            if (flag) {
+                orderList.classList.remove("rightToLeft");
+            } else {
+                orderList.classList.add("rightToLeft");
+            }
+
+
+            processArrayWithDelay(orderArr)
+                .then(() => {
+                    console.log("ORDER SUCCESSFULLY PROCESSED");
+                    console.log(orderArr);
+                })
+                .catch(error => {
+                    console.error("Error occurred:", error);
+                });
+
+            console.log(orderArr);
+
+
+        })
+        activeEvent();
+
+
+
+        function processArrayWithDelay(arr) {
+            function processObject(obj) {
+                return new Promise((resolve, reject) => {
+
+                    setTimeout(() => {
+                        console.log(obj.name);
+                        resolve(obj.name);
+                    }, obj.time);
+                });
+            }
+
+            let promiseChain = Promise.resolve();
+            console.log(promiseChain);
+            arr.forEach(obj => {
+                promiseChain = promiseChain.then(() => processObject(obj))
+
+
+                    // processObject(obj)
+                    .then((data) => {
+                        console.log(data);
+                        const index = arr.indexOf(obj);
+                        if (index > -1) {
+                            arr.splice(index, 1);
+                        }
+
+                        orderCount.innerHTML = orderArr.length;
+                    });
+                // console.log(promiseChain, obj.name);
+            });
+
+            // console.log(promiseChain);
+
+            return promiseChain;
+        }
+    </script>
+</body>
+
+</html>

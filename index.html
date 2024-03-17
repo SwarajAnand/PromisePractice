@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Annapurna+SIL:wght@400;700&family=Assistant:wght@200..800&family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Shadows+Into+Light&family=Signika:wght@300..700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Annapurna+SIL:wght@400;700&family=Assistant:wght@200..800&family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Shadows+Into+Light&family=Signika:wght@300..700&family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap"
         rel="stylesheet">
     <title>Document</title>
     <style>
@@ -17,7 +19,9 @@
         }
 
         * {
-            font-family: "Libre Franklin", sans-serif;
+            font-family: "Tiro Devanagari Sanskrit", serif;
+            font-weight: 400;
+            font-style: normal;
             margin: 0;
             padding: 0;
         }
@@ -28,7 +32,6 @@
             gap: 20px;
             padding: 10px;
             justify-content: space-between;
-            /* text-align: center; */
         }
 
         h2 {
@@ -70,8 +73,7 @@
             font-size: 14.5px;
         }
 
-        .cartIcon,
-        .mainCartIcon {
+        .cartIcon {
             width: 25px;
             height: 25px;
             border: 1px solid rgb(206, 203, 203);
@@ -84,8 +86,7 @@
             cursor: pointer;
         }
 
-        .cartIcon:hover,
-        .mainCartIcon:hover {
+        .cartIcon:hover {
             background-color: rgb(59, 58, 58);
             color: white;
             transition: 0.3s ease;
@@ -100,7 +101,7 @@
             z-index: 10;
             top: 0;
             right: 0;
-            /* background-color: transparent; */
+            overflow: scroll;
 
             background: rgba(255, 255, 255, 0.2);
             padding: 20px;
@@ -114,11 +115,16 @@
         }
 
         .mainCartIcon {
-            background-color: rgb(168, 51, 51);
-            top: 8px;
-            color: white;
-            right: 18px;
+            background-color: rgb(250, 38, 38);
+            border: 2px solid red;
+            width: 13%;
+            padding: 7px;
+            margin: auto;
+            cursor: pointer;
             z-index: 11;
+            border-radius: 10px;
+            text-align: center;
+            align-items: center;
         }
 
         #orderCount {
@@ -127,24 +133,66 @@
             position: absolute;
             font-size: 1.5rem;
             font-weight: 900;
-            top: -7px;
-            left: -7px;
+            top: 7px;
+            color: white;
+            right: 215px;
+        }
+
+        #orderArea {
+            height: 60px;
+            width: 80px;
+        }
+
+        .promiseCard {
+            display: flex;
+            background-color: rgb(206, 199, 196);
+            margin-top: 20px;
+            align-items: center;
+            border-radius: 10px;
+        }
+
+        .orderNumber {
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        .orderName {
+            font-size: 18px;
+        }
+
+        .lastDiv {
+            text-align: center;
+            padding: 20px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        h1 {
+            font-size: 40px;
+            font-weight: bold;
+            width: 82%;
+
+        }
+
+        .placeOrderBtn {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
 
-    <h1>BurgerAadmi</h1>
+    <div style="display: flex; ;">
+        <h1>Burgeeer WAALE</h1>
 
-    <p class="mainCartIcon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-            stroke="currentColor" className="w-6 h-6">
-            <path strokeLinecap="round" strokeLinejoin="round"
-                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-        </svg>
+        <p class="mainCartIcon"><span class="placeOrderBtn">PLACE ORDER</span>
+            <span id="orderCount">0</span>
+        </p>
+    </div>
 
-        <span id="orderCount">0</span>
-    </p>
+
     <div id="orderList" class="rightToLeft"></div>
     <div id="root"></div>
 
@@ -163,9 +211,11 @@
                 <img src="${item.images[0].sm}"/>
                 <h2>${item.name}</h2>
                 <p class="description">${item.desc}</p>
-                <p class="cartIcon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                </svg>
+                <p class="cartIcon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+
                 </p>
             `;
 
@@ -181,45 +231,56 @@
             document.querySelectorAll(".cartIcon").forEach((ele, index) => {
                 // console.log(ele);
                 ele.addEventListener("click", (e) => {
-                    let rand = Math.floor(Math.random() * 1000);
+                    let rand = Math.floor(Math.random() * 2000);
                     let obj = {
                         index: index,
                         name: data[index].name,
-                        time: rand
+                        time: rand,
+                        image: data[index].images[0].sm
                     }
-
                     orderArr.push(obj);
                     orderCount.innerHTML = orderArr.length;
-                    console.log(orderArr);
+                    // console.log(orderArr);
                 })
             })
-        }
+        };
+
+        activeEvent();
 
         let flag = false;
         mainCartIcon.addEventListener('click', () => {
             flag = !flag;
-            console.log(flag);
+            // console.log(flag);
             if (flag) {
                 orderList.classList.remove("rightToLeft");
+
+                orderList.innerHTML = ``;
+                orderList.innerHTML = `
+                        <p style="font-size: 20px; font-weight: bold;">Orders Received</p>
+                        `;
+
+                processArrayWithDelay(orderArr)
+                    .then(() => {
+                        // console.log("ORDER SUCCESSFULLY PROCESSED");
+                        console.log(orderArr);
+                        let div = document.createElement('div');
+
+                        div.innerHTML = "Thank you for your order 👏❤️";
+                        div.classList.add("lastDiv");
+                        orderList.append(div);
+                        // orderList.innerHTML = `ORDER SUCCESSFULLY PROCESSED`;
+                    })
+                    .catch(error => {
+                        console.error("Error occurred:", error);
+                    });
+
             } else {
                 orderList.classList.add("rightToLeft");
             }
 
-
-            processArrayWithDelay(orderArr)
-                .then(() => {
-                    console.log("ORDER SUCCESSFULLY PROCESSED");
-                    console.log(orderArr);
-                })
-                .catch(error => {
-                    console.error("Error occurred:", error);
-                });
-
-            console.log(orderArr);
-
-
+            // console.log(orderArr);
         })
-        activeEvent();
+
 
 
 
@@ -228,21 +289,34 @@
                 return new Promise((resolve, reject) => {
 
                     setTimeout(() => {
-                        console.log(obj.name);
-                        resolve(obj.name);
+                        // console.log(obj);
+
+                        let objEle = {
+                            name: obj.name,
+                            time: obj.time,
+                            image: obj.image
+                        }
+                        resolve(objEle);
                     }, obj.time);
                 });
             }
 
             let promiseChain = Promise.resolve();
-            console.log(promiseChain);
+            // console.log(promiseChain);
             arr.forEach(obj => {
                 promiseChain = promiseChain.then(() => processObject(obj))
-
-
                     // processObject(obj)
                     .then((data) => {
-                        console.log(data);
+                        // console.log(data);
+                        let div = document.createElement('div');
+                        div.innerHTML = `
+                        <h1 class="orderName">${data.name}</h1>
+                        <img id="orderArea" src="${data.image}"/>
+                        <p class="orderNumber">Order Time : ${data.time}</p>
+                        `;
+                        div.classList.add("promiseCard");
+                        orderList.append(div);
+
                         const index = arr.indexOf(obj);
                         if (index > -1) {
                             arr.splice(index, 1);
@@ -250,11 +324,7 @@
 
                         orderCount.innerHTML = orderArr.length;
                     });
-                // console.log(promiseChain, obj.name);
             });
-
-            // console.log(promiseChain);
-
             return promiseChain;
         }
     </script>
